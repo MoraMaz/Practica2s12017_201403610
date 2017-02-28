@@ -1,6 +1,7 @@
 package Interfaz;
 
-import cliente.Conexion;
+import PythonConexion.PythonConexion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -8,9 +9,9 @@ import cliente.Conexion;
  */
 public class VentanaPila extends javax.swing.JFrame {
 
-    private final Conexion conexion;
+    private final PythonConexion conexion;
     
-    public VentanaPila(Conexion conexion) {
+    public VentanaPila(PythonConexion conexion) {
         initComponents();
         setLocationRelativeTo(null);
         this.conexion = conexion;
@@ -24,11 +25,14 @@ public class VentanaPila extends javax.swing.JFrame {
         btnPush = new javax.swing.JButton();
         txtPush = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnPop.setText("Pop");
 
         btnPush.setText("Push");
+        btnPush.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPushActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,6 +63,15 @@ public class VentanaPila extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPushActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPushActionPerformed
+        if(txtPush.getText().matches("\\d+")){
+            conexion.stak_add(Integer.parseInt(txtPush.getText()));
+            txtPush.setText("");
+        }else{
+            JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
+        }
+    }//GEN-LAST:event_btnPushActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPop;

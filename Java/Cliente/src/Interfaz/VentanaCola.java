@@ -1,6 +1,7 @@
 package Interfaz;
 
-import cliente.Conexion;
+import PythonConexion.PythonConexion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -8,9 +9,9 @@ import cliente.Conexion;
  */
 public class VentanaCola extends javax.swing.JFrame {
 
-    private final Conexion conexion;
+    private final PythonConexion conexion;
     
-    public VentanaCola(Conexion conexion) {
+    public VentanaCola(PythonConexion conexion) {
         initComponents();
         setLocationRelativeTo(null);
         this.conexion = conexion;
@@ -24,9 +25,12 @@ public class VentanaCola extends javax.swing.JFrame {
         btnEnqueue = new javax.swing.JButton();
         btnDequeue = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnEnqueue.setText("Enqueue");
+        btnEnqueue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnqueueActionPerformed(evt);
+            }
+        });
 
         btnDequeue.setText("Dequeue");
 
@@ -59,6 +63,15 @@ public class VentanaCola extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEnqueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnqueueActionPerformed
+        if(txtEnqueue.getText().matches("\\d+")){
+            conexion.queue_add(Integer.parseInt(txtEnqueue.getText()));
+            txtEnqueue.setText("");
+        }else{
+            JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
+        }
+    }//GEN-LAST:event_btnEnqueueActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDequeue;

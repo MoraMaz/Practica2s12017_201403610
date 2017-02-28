@@ -1,6 +1,7 @@
 package Interfaz;
 
-import cliente.Conexion;
+import PythonConexion.PythonConexion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -8,9 +9,9 @@ import cliente.Conexion;
  */
 public class VentanaLista extends javax.swing.JFrame {
 
-    private final Conexion conexion;
+    private final PythonConexion conexion;
     
-    public VentanaLista(Conexion conexion) {
+    public VentanaLista(PythonConexion conexion) {
         initComponents();
         setLocationRelativeTo(null);
         this.conexion = conexion;
@@ -27,11 +28,19 @@ public class VentanaLista extends javax.swing.JFrame {
         txtBorrar = new javax.swing.JTextField();
         txtBuscar = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,8 +97,21 @@ public class VentanaLista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        if(txtAgregar.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "No se puede insertar un valor nulo.");
+        }else{
+            conexion.list_add(txtAgregar.getText());
+            txtAgregar.setText("");
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
