@@ -33,6 +33,11 @@ public class VentanaCola extends javax.swing.JFrame {
         });
 
         btnDequeue.setText("Dequeue");
+        btnDequeue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDequeueActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,12 +71,16 @@ public class VentanaCola extends javax.swing.JFrame {
 
     private void btnEnqueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnqueueActionPerformed
         if(txtEnqueue.getText().matches("\\d+")){
-            conexion.queue_add(Integer.parseInt(txtEnqueue.getText()));
+            conexion.queue_add(txtEnqueue.getText());
             txtEnqueue.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
         }
     }//GEN-LAST:event_btnEnqueueActionPerformed
+
+    private void btnDequeueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDequeueActionPerformed
+        conexion.queue_remove();
+    }//GEN-LAST:event_btnDequeueActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDequeue;

@@ -106,11 +106,21 @@ public class VentanaLista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        if(txtBorrar.getText().matches("\\d+")){
+            conexion.list_remove(txtBorrar.getText());
+            txtBorrar.setText("");
+        }else{
+            JOptionPane.showMessageDialog(this, "Se necesita un índice numérico.");
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        if(txtBuscar.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "No se puede buscar un valor nulo.");
+        }else{
+            conexion.list_search(txtBuscar.getText());
+            txtBuscar.setText("");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

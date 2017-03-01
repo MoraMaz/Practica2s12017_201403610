@@ -30,7 +30,7 @@ public class PythonConexion {
         try {
             URL url = new URL("http://0.0.0.0:5000/list_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -40,7 +40,7 @@ public class PythonConexion {
     
     public void matrix_add(String dato){
         String[] separado = dato.split("@");
-        RequestBody rb = new FormEncodingBuilder()
+        rb = new FormEncodingBuilder()
                 .add("inicial", dato.charAt(0) + "")
                 .add("dominio", separado[1])
                 .add("nombre", separado[0])
@@ -48,7 +48,7 @@ public class PythonConexion {
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -56,14 +56,14 @@ public class PythonConexion {
         }
     }
     
-    public void queue_add(int dato){
+    public void queue_add(String dato){
         rb = new FormEncodingBuilder()
-                .add("dato", dato + "")
+                .add("dato", dato)
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/queue_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -71,14 +71,14 @@ public class PythonConexion {
         }
     }
     
-    public void stak_add(int dato){
+    public void stak_add(String dato){
         rb = new FormEncodingBuilder()
-                .add("dato", dato + "")
+                .add("dato", dato)
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/stak_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -86,14 +86,14 @@ public class PythonConexion {
         }
     }
     
-    public void list_remove(int indice){
+    public void list_remove(String indice){
         rb = new FormEncodingBuilder()
-                .add("dato", indice + "")
+                .add("indice", indice + "")
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/list_remove");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -103,7 +103,7 @@ public class PythonConexion {
     
     public void matrix_remove(String dato){
         String[] separado = dato.split("@");
-        RequestBody rb = new FormEncodingBuilder()
+        rb = new FormEncodingBuilder()
                 .add("inicial", dato.charAt(0) + "")
                 .add("dominio", separado[1])
                 .add("nombre", separado[0])
@@ -119,59 +119,69 @@ public class PythonConexion {
         }
     }
     
-    public String queue_remove(){
+    public void queue_remove(){
         rb = new FormEncodingBuilder()
-                .add("dato", "")
+                .add("d", "")
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/queue_remove");
             Request request = new Request.Builder().url(url).post(rb).build();
             Response response = webClient.newCall(request).execute();
-            return response.body().string();
+            String response_string = response.body().string();
+            if (response_string.equals("-1996")){
+                return;
+            }
+            System.out.println("Se sacó " + response_string + " de la cola");
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
-        return null;
     }
     
-    public String stak_remove(){
+    public void stak_remove(){
         rb = new FormEncodingBuilder()
-                .add("dato", "")
+                .add("d", "")
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/stak_remove");
             Request request = new Request.Builder().url(url).post(rb).build();
             Response response = webClient.newCall(request).execute();
-            return response.body().string();
+            String response_string = response.body().string();
+            if (response_string.equals("-1996")){
+                return;
+            }
+            System.out.println("Se sacó " + response_string + " de la pila");
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
-        return null;
     }
     
-    public String list_search(int indice){
+    public void list_search(String dato){
         rb = new FormEncodingBuilder()
-                .add("indice", indice + "")
+                .add("dato", dato)
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/list_search");
             Request request = new Request.Builder().url(url).post(rb).build();
             Response response = webClient.newCall(request).execute();
-            return response.body().string();
+            String response_string = response.body().string();
+            if (response_string.equals("-1996")){
+                System.out.println("NO SE ENCONTRÓ EL DATO");
+            }else{
+                System.out.println("EL DATO SE ENCUENTRA EN EL ÍNDICE <" + response_string + ">");
+            }
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
             System.out.println(ex.toString());
         }
-        return null;
     }
     
     public String matrix_search_letter(String dato){
-        RequestBody rb = new FormEncodingBuilder()
+        rb = new FormEncodingBuilder()
                 .add("inicial", dato)
                 .build();
         try {
@@ -188,7 +198,7 @@ public class PythonConexion {
     }
     
     public String matrix_search_domain(String dato){
-        RequestBody rb = new FormEncodingBuilder()
+        rb = new FormEncodingBuilder()
                 .add("dominio", dato)
                 .build();
         try {

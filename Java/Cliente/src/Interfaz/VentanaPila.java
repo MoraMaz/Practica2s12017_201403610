@@ -26,6 +26,11 @@ public class VentanaPila extends javax.swing.JFrame {
         txtPush = new javax.swing.JTextField();
 
         btnPop.setText("Pop");
+        btnPop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPopActionPerformed(evt);
+            }
+        });
 
         btnPush.setText("Push");
         btnPush.addActionListener(new java.awt.event.ActionListener() {
@@ -66,12 +71,16 @@ public class VentanaPila extends javax.swing.JFrame {
 
     private void btnPushActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPushActionPerformed
         if(txtPush.getText().matches("\\d+")){
-            conexion.stak_add(Integer.parseInt(txtPush.getText()));
+            conexion.stak_add(txtPush.getText());
             txtPush.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
         }
     }//GEN-LAST:event_btnPushActionPerformed
+
+    private void btnPopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopActionPerformed
+        conexion.stak_remove();
+    }//GEN-LAST:event_btnPopActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPop;

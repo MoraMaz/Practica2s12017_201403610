@@ -16,7 +16,6 @@ class ListaSimple:
 		self.Tamano = 0
 
 	def Agregar(self, dato, posicion):
-		print dato
 		if self.Tamano == 0:
 			self.Inicio = NodoSimple(dato, None)
 		else:
@@ -40,14 +39,18 @@ class ListaSimple:
 				EnIndice.siguiente = Nuevo
 		self.Tamano = self.Tamano + 1
 
-	def Borrar(self, indice): 
-		Actual = self.Inicio
-		i = 0
-		while(i < indice - 1):
-			Actual = Actual.siguiente
-			i = i + 1
-		if i < self.Tamano - 1:
-			Actual.siguiente = Actual.siguiente.siguiente
+	def Borrar(self, indice):
+		if indice == 0:
+			self.Inicio = self.Inicio.siguiente
+		else:
+			Actual = self.Inicio
+			i = 0
+			while(i < indice - 1):
+				Actual = Actual.siguiente
+				i = i + 1
+			if i < self.Tamano - 1:
+				Actual.siguiente = Actual.siguiente.siguiente
+		self.Tamano = self.Tamano - 1
 
 	def Buscar(self, dato):
 		Auxiliar = self.Inicio
@@ -57,24 +60,25 @@ class ListaSimple:
 				return i
 			Auxiliar = Auxiliar.siguiente
 			i = i + 1
-		return -1
+		return -1996
 
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Lista_simple.dot', 'w')
 		Grafo_dot = "digraph ListaSimple{\nlabel = \"Lista Simple\"\n\n"
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar != None):
-			Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + Auxiliar.dato + "\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
-		Grafo_dot += "\n"
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar.siguiente != None):
-			Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
+		if self.Tamano != 0:
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar != None):
+				Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + Auxiliar.dato + "\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
+			Grafo_dot += "\n"
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar.siguiente != None):
+				Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
 		Grafo_dot += "}"
 		Archivo.write(Grafo_dot)
 		Archivo.close()
@@ -106,19 +110,20 @@ class Cola:
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Cola.dot', 'w')
 		Grafo_dot = "digraph Cola{\n label = \"Cola\""
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar != None):
-			Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + str(Auxiliar.dato) + "\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
-		Grafo_dot += "\n"
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar.siguiente != None):
-			Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
+		if self.Tamano != 0:
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar != None):
+				Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + str(Auxiliar.dato) + "\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
+			Grafo_dot += "\n"
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar.siguiente != None):
+				Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
 		Grafo_dot += "}"
 		Archivo.write(Grafo_dot)
 		Archivo.close()
@@ -147,19 +152,20 @@ class Pila:
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Pila.dot', 'w')
 		Grafo_dot = "digraph Pila{\n label = \"Pila\""
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar != None):
-			Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + str(Auxiliar.dato) + "\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
-		Grafo_dot += "\n"
-		Auxiliar = self.Inicio
-		Indice = 0
-		while(Auxiliar.siguiente != None):
-			Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
-			Auxiliar = Auxiliar.siguiente
-			Indice = Indice + 1
+		if self.Tamano != 0:
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar != None):
+				Grafo_dot += "\tNode" + str(Indice) + "[label = \"" + str(Auxiliar.dato) + "\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
+			Grafo_dot += "\n"
+			Auxiliar = self.Inicio
+			Indice = 0
+			while(Auxiliar.siguiente != None):
+				Grafo_dot += "\tNode" + str(Indice) + " -> Node" + str(Indice + 1) + "[label = \"Siguiente\"];\n"
+				Auxiliar = Auxiliar.siguiente
+				Indice = Indice + 1
 		Grafo_dot += "}"
 		Archivo.write(Grafo_dot)
 		Archivo.close()
@@ -181,32 +187,35 @@ class Profundidad:
 		self.izquierda = None			#Profundidad
 		self.tamano = 0
 
-	def Insertar(self, dato):
-		if tamano == 0:
-			inicio = NodoMatriz(dato, None, None)
-			fin = inicio
+	def Insertar(self, dato, esNodo):
+		if esNodo:
+			if tamano == 0:
+				inicio = dato
+				fin = inicio
+			else:
+				dato.adelante = fin
+				fin.atras = dato
+				fin = fin.atras
 		else:
-			fin.atras = NodoMatriz(dato, fin, None)
-			fin = fin.atras
+			if tamano == 0:
+				inicio = NodoMatriz(dato, None, None)
+				fin = inicio
+			else:
+				fin.atras = NodoMatriz(dato, fin, None)
+				fin = fin.atras
 		tamano = tamano + 1
 		return fin
 
 class NodoCabecera:
-	def __init__ (self, identificador, encabezado, siguiente, anterior):
-		self.id = identificador			#Integer
+	def __init__ (self, encabezado, siguiente, anterior):
 		self.encabezado = encabezado	#String
-		self.primera = primera			#Profundidad
+		self.primera = None				#Profundidad
 		self.siguiente = siguiente		#NodoCabecera
 		self.anterior = anterior		#NodoCabecera
 
 class Cabecera:
 	def __init__ (self):
 		self.inicio = None				#NodoCabecera
-
-	def ObtenerIndice(self, dato):
-		if len(dato) == 1:
-			return ord(dato)
-		return ord(dato[0])
 
 	def Existe(self, dato):
 		auxiliar = inicio
@@ -217,6 +226,8 @@ class Cabecera:
 		return False
 
 	def Obtener(self, dato):
+		if inicio.encabezado == dato:
+			return inicio
 		auxiliar = inicio
 		while(auxiliar.siguiente != None):
 			if auxiliar.encabezado == dato:
@@ -225,21 +236,25 @@ class Cabecera:
 		return None
 
 	def Insertar(self, dato):
-		index = ObtenerIndice(dato)
-		auxiliar = NodoCabecera(index, dato, None, None)
+		auxiliar = NodoCabecera(dato, None, None)
 		if inicio == None:
 			inicio = auxiliar
 		else:
 			if(Existe(dato)):
 				auxiliar = Obtener(dato)
 			else:
-				actual = inicio
-				while(actual.identificador < index):
-					actual = actual.siguiente
-				auxiliar.anterior = actual.anterior
-				actual.anterior.siguiente = auxiliar
-				actual.anterior = auxiliar
-				auxiliar.siguiente = actual
+				if dato.lower() < inicio.encabezado.lower():
+					inicio.anterior = auxiliar
+					auxiliar.siguiente = inicio
+					inicio = auxiliar
+				else:
+					actual = inicio
+					while(actual.encabezado.lower() < dato.lower()):
+						actual = actual.siguiente
+					auxiliar.anterior = actual.anterior
+					actual.anterior.siguiente = auxiliar
+					actual.anterior = auxiliar
+					auxiliar.siguiente = actual
 		return auxiliar
 
 class Matriz:
@@ -248,24 +263,45 @@ class Matriz:
 		self.filas = None				#Cabecera
 
 	def Agregar(self, inicial, dominio, nombre):
-		if filas.Existe(inicial):
-			print "Ya existe \"" + inicial + "\""
-		if columnas.Existe(dominio):
-			print "Ya existe \"" + dominio + "\""
+		nodoFila = filas.Insertar(inicial)
+		nodoColumna = columnas.Insertar(dominio)
+		nodoDato = None
+		if filas.primera == None:
+			filas.primera = Profundidad()
+			nodoDato = filas.primera.Insertar(nombre, False)
+			if columnas.primera == None:
+				columnas.primera = Profundidad()
+				columnas.primera.Insertar(nodoDato, True)
+			else:
+				primerita = Profundidad()
+				if nombre.lower() < columnas.primera.inicio.dato.lower():
+					primerita.Insertar(nodoDato, True)
+					primerita.abajo = columnas.primera
+					columnas.primera = primerita
+				else:
+					actual = columnas.primera
+					while(actual.inicio.dato.lower() < nombre.lower()):
+						actual = actual.abajo
+
+
 
 List = ListaSimple()
 Queue = Cola()
 Stak = Pila()
 Matrix = Matriz()
 
+
+@app.route('/')
+def init():
+	return "esto es una prueba :v"
+
 #INSERTAR
 @app.route('/list_add', methods=['POST'])
 def list_add():
 	dato = str(request.form['dato'])
-	print dato
 	List.Agregar(str(dato), -1)
 	List.Graficar()
-	print "se agrego " + str(dato) + " a la lista."
+	return ""
 
 @app.route('/matrix_add', methods=['POST'])
 def matrix_add():
@@ -280,19 +316,22 @@ def queue_add():
 	dato = int(request.form['dato'])
 	Queue.Queue(int(dato))
 	Queue.Graficar()
-	print "se agrego " + str(dato) + " a la cola."
+	return ""
 
 @app.route('/stak_add', methods=['POST'])
 def stak_add():
 	dato = int(request.form['dato'])
 	Stak.Push(int(dato))
 	Stak.Graficar()
-	print "se agrego " + str(dato) + " a la pila."
+	return ""
 
 #ELIMINAR
 @app.route('/list_remove', methods=['POST'])
 def list_remove():
+	indice = int(request.form['indice'])
+	List.Borrar(int(indice))
 	List.Graficar()
+	return ""
 
 @app.route('/matrix_remove', methods=['POST'])
 def matrix_remove():
@@ -300,24 +339,29 @@ def matrix_remove():
 
 @app.route('/queue_remove', methods=['POST'])
 def queue_remove():
+	dato = Queue.Dequeue()
 	Queue.Graficar()
+	return str(dato)
 
 @app.route('/stak_remove', methods=['POST'])
 def stak_remove():
+	dato = Stak.Pop()
 	Stak.Graficar()
+	return str(dato)
 
 #BUSCAR
 @app.route('/list_search', methods=['POST'])
 def list_search():
-	List.Graficar()
+	dato = str(request.form['dato'])
+	return str(List.Buscar(dato))
 
 @app.route('/matrix_search_letter', methods=['POST'])
 def matrix_search_letter():
-	print ":3"
+	return ":3"
 
 @app.route('/matrix_search_domain', methods=['POST'])
 def matrix_search_domain():
-	print ":3"
+	return ":3"
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0')
