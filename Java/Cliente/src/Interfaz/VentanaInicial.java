@@ -1,6 +1,6 @@
 package Interfaz;
 
-import cliente.Conexion;
+import PythonConexion.PythonConexion;
 
 /**
  *
@@ -8,12 +8,12 @@ import cliente.Conexion;
  */
 public class VentanaInicial extends javax.swing.JFrame {
 
-    private final Conexion conexion;
+    private final PythonConexion conexion;
     
     public VentanaInicial() {
         initComponents();
         setLocationRelativeTo(null);
-        conexion = new Conexion();
+        conexion = new PythonConexion();
     }
 
     @SuppressWarnings("unchecked")

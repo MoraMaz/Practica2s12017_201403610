@@ -1,6 +1,6 @@
 package Interfaz;
 
-import cliente.Conexion;
+import PythonConexion.PythonConexion;
 
 /**
  *
@@ -8,9 +8,9 @@ import cliente.Conexion;
  */
 public class VentanaMatriz extends javax.swing.JFrame {
 
-    private final Conexion conexion;
+    private final PythonConexion conexion;
     
-    public VentanaMatriz(Conexion conexion) {
+    public VentanaMatriz(PythonConexion conexion) {
         initComponents();
         setLocationRelativeTo(null);
         this.conexion = conexion;
@@ -29,15 +29,33 @@ public class VentanaMatriz extends javax.swing.JFrame {
         btnBuscarDominio = new javax.swing.JButton();
         txtBuscarDominio = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         btnBuscarLetra.setText("Buscar letra");
+        btnBuscarLetra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLetraActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnBuscarDominio.setText("Buscar dominio");
+        btnBuscarDominio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarDominioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,6 +109,27 @@ public class VentanaMatriz extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        if(txtAgregar.getText().matches(".+@.+")){
+            conexion.matrix_add(txtAgregar.getText());
+            txtAgregar.setText("");
+        }else{
+            System.out.println(":v");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLetraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarLetraActionPerformed
+
+    private void btnBuscarDominioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDominioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarDominioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

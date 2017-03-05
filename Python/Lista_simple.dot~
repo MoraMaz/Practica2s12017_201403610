@@ -1,0 +1,7 @@
+Graph ListaSimple{
+	Node0 [label = "hola,"];
+	Node2 [label = "hace?"];
+	Node1 [label = "¿qué"];
+	
+	Node0->Node1->Node2;
+}
