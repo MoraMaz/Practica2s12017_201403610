@@ -48,20 +48,12 @@ public class PythonConexion {
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-<<<<<<< HEAD
             Response response = webClient.newCall(request).execute();
             System.out.println(response.body().string());
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
-            ex.printStackTrace();
-=======
-            webClient.newCall(request).execute();
-        } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
-        } catch (IOException ex) {
-            System.out.println(ex.toString());
->>>>>>> origin/master
         }
     }
     
