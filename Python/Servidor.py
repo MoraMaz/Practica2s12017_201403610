@@ -64,7 +64,11 @@ class ListaSimple:
 
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Lista_simple.dot', 'w')
+<<<<<<< HEAD
 		Grafo_dot = "digraph ListaSimple{\n\tnode [shape = box];\n\trankdir=LR\n\tlabel=\"Lista Simple\"\n\n"
+=======
+		Grafo_dot = "digraph ListaSimple{\nlabel = \"Lista Simple\"\n\n"
+>>>>>>> origin/master
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -109,7 +113,11 @@ class Cola:
 
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Cola.dot', 'w')
+<<<<<<< HEAD
 		Grafo_dot = "digraph Cola{\n\tnode [shape = box];\n\tlabel=\"Cola\""
+=======
+		Grafo_dot = "digraph Cola{\n label = \"Cola\""
+>>>>>>> origin/master
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -151,7 +159,11 @@ class Pila:
 
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Pila.dot', 'w')
+<<<<<<< HEAD
 		Grafo_dot = "digraph Pila{\n\tnode [shape = box];\n\tlabel=\"Pila\""
+=======
+		Grafo_dot = "digraph Pila{\n label = \"Pila\""
+>>>>>>> origin/master
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -172,6 +184,7 @@ class Pila:
 		subprocess.call(['dot', '/home/moramaz/Escritorio/Pila.dot', '-o', '/home/moramaz/Escritorio/Pila.png', '-Tpng', '-Gcharset=utf8'])
 
 class NodoMatriz:
+<<<<<<< HEAD
 	def __init__(self, dato):
 		self.dato = dato
 		self.id = None
@@ -183,6 +196,92 @@ class NodoMatriz:
 		self.izquierda = None
 		self.adelante = None
 		self.atras = None
+=======
+	def __init__(self, dato, adelante, atras):
+		self.dato = dato				#String
+		self.adelante = adelante		#NodoMatriz
+		self.atras = atras				#NodoMatriz
+
+class Profundidad:
+	def __init__ (self):
+		self.inicio = None				#NodoMatriz
+		self.fin = None					#NodoMatriz
+		self.arriba = None				#Profundidad
+		self.abajo = None				#Profundidad
+		self.derecha = None				#Profundidad
+		self.izquierda = None			#Profundidad
+		self.tamano = 0
+
+	def Insertar(self, dato, esNodo):
+		if esNodo:
+			if tamano == 0:
+				inicio = dato
+				fin = inicio
+			else:
+				dato.adelante = fin
+				fin.atras = dato
+				fin = fin.atras
+		else:
+			if tamano == 0:
+				inicio = NodoMatriz(dato, None, None)
+				fin = inicio
+			else:
+				fin.atras = NodoMatriz(dato, fin, None)
+				fin = fin.atras
+		tamano = tamano + 1
+		return fin
+
+class NodoCabecera:
+	def __init__ (self, encabezado, siguiente, anterior):
+		self.encabezado = encabezado	#String
+		self.primera = None				#Profundidad
+		self.siguiente = siguiente		#NodoCabecera
+		self.anterior = anterior		#NodoCabecera
+
+class Cabecera:
+	def __init__ (self):
+		self.inicio = None				#NodoCabecera
+
+	def Existe(self, dato):
+		auxiliar = inicio
+		while(auxiliar.siguiente != None):
+			if auxiliar.encabezado == dato:
+				return True
+			auxiliar = auxiliar.siguiente
+		return False
+
+	def Obtener(self, dato):
+		if inicio.encabezado == dato:
+			return inicio
+		auxiliar = inicio
+		while(auxiliar.siguiente != None):
+			if auxiliar.encabezado == dato:
+				return auxiliar
+			auxiliar = auxiliar.siguiente
+		return None
+
+	def Insertar(self, dato):
+		auxiliar = NodoCabecera(dato, None, None)
+		if inicio == None:
+			inicio = auxiliar
+		else:
+			if(Existe(dato)):
+				auxiliar = Obtener(dato)
+			else:
+				if dato.lower() < inicio.encabezado.lower():
+					inicio.anterior = auxiliar
+					auxiliar.siguiente = inicio
+					inicio = auxiliar
+				else:
+					actual = inicio
+					while(actual.encabezado.lower() < dato.lower()):
+						actual = actual.siguiente
+					auxiliar.anterior = actual.anterior
+					actual.anterior.siguiente = auxiliar
+					actual.anterior = auxiliar
+					auxiliar.siguiente = actual
+		return auxiliar
+>>>>>>> origin/master
 
 class Matriz:
 	def __init__(self):
@@ -339,6 +438,7 @@ class Matriz:
 					auxiliar.izquierda = NodoDato
 					break
 
+<<<<<<< HEAD
 	def Graficar(self):
 		Grafo_dot = "digraph Matriz{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Matriz\"" 
 		paraAbajo = self.inicio
@@ -430,15 +530,46 @@ class Matriz:
 		Archivo.write(Grafo_dot) 
 		Archivo.close() 
 		subprocess.call(['dot', '/home/moramaz/Escritorio/Matriz.dot', '-o', '/home/moramaz/Escritorio/Matriz.png', '-Tpng', '-Gcharset=utf8']) 
+=======
+	def Agregar(self, inicial, dominio, nombre):
+		nodoFila = filas.Insertar(inicial)
+		nodoColumna = columnas.Insertar(dominio)
+		nodoDato = None
+		if filas.primera == None:
+			filas.primera = Profundidad()
+			nodoDato = filas.primera.Insertar(nombre, False)
+			if columnas.primera == None:
+				columnas.primera = Profundidad()
+				columnas.primera.Insertar(nodoDato, True)
+			else:
+				primerita = Profundidad()
+				if nombre.lower() < columnas.primera.inicio.dato.lower():
+					primerita.Insertar(nodoDato, True)
+					primerita.abajo = columnas.primera
+					columnas.primera = primerita
+				else:
+					actual = columnas.primera
+					while(actual.inicio.dato.lower() < nombre.lower()):
+						actual = actual.abajo
+
+
+>>>>>>> origin/master
 
 List = ListaSimple()
 Queue = Cola()
 Stak = Pila()
 Matrix = Matriz()
 
+<<<<<<< HEAD
 @app.route('/')
 def init():
 	return ""
+=======
+
+@app.route('/')
+def init():
+	return "esto es una prueba :v"
+>>>>>>> origin/master
 
 #INSERTAR
 @app.route('/list_add', methods=['POST'])
@@ -446,6 +577,7 @@ def list_add():
 	dato = str(request.form['dato'])
 	List.Agregar(str(dato), -1)
 	List.Graficar()
+<<<<<<< HEAD
 	return "s"
 
 @app.route('/matrix_add', methods=['POST'])
@@ -457,6 +589,18 @@ def matrix_add():
 	Matrix.Graficar()
 	return ""
 
+=======
+	return ""
+
+@app.route('/matrix_add', methods=['POST'])
+def matrix_add():
+	inicial = str(request.form['inicial'])
+	dominio = str(request.form['dominio'])
+	nombre = str(request.form['nombre'])
+	Matrix.Agregar(str(inicial), str(dominio), str(nombre))
+	print "se agrego " + str(nombre) + "@" + str(dominio) + " a la matriz."
+
+>>>>>>> origin/master
 @app.route('/queue_add', methods=['POST'])
 def queue_add():
 	dato = int(request.form['dato'])

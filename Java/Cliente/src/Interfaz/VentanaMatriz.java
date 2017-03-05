@@ -111,12 +111,16 @@ public class VentanaMatriz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+<<<<<<< HEAD
         if(txtAgregar.getText().matches(".+@.+")){
             conexion.matrix_add(txtAgregar.getText());
             txtAgregar.setText("");
         }else{
             System.out.println(":v");
         }
+=======
+        // TODO add your handling code here:
+>>>>>>> origin/master
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
