@@ -224,6 +224,79 @@ class Matriz:
 				return auxiliar
 			auxiliar = auxiliar.abajo
 
+	def __GraficarLista(self, nodo, esDominio):
+		auxiliar = nodo
+		hayProfundidad = False
+		ultimoaidi = 0
+		if esDominio:
+			Grafo_dot = "digraph Dominio{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Dominio '" + nodo.dato + "'\""
+			while auxiliar != None:
+				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
+				ultimoaidi = auxiliar.id
+				if auxiliar.abajo != None:
+					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.abajo.id) + ";"
+				if auxiliar.atras != None:
+					hayProfundidad = True
+				auxiliar = auxiliar.abajo
+			if hayProfundidad:
+				auxiliar = nodo
+				profundidad = auxiliar.atras
+				while auxiliar != None:
+					while profundidad != None:
+						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
+						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
+						ultimoaidi += 1996
+						profundidad = profundidad.atras
+					auxiliar = auxiliar.abajo
+					if auxiliar != None:
+						profundidad = auxiliar.atras
+			Grafo_dot += "\n}" 
+			Archivo = open('/home/moramaz/Escritorio/Dominio.dot', 'w') 
+			Archivo.write(Grafo_dot) 
+			Archivo.close() 
+			subprocess.call(['dot', '/home/moramaz/Escritorio/Dominio.dot', '-o', '/home/moramaz/Escritorio/Dominio.png', '-Tpng', '-Gcharset=utf8']) 
+		else:
+			Grafo_dot = "digraph Inicial{\n\trankdir=LR;\n\tnode [shape = box];\n\tlabel = \"Inicial '" + nodo.dato + "'\""
+			while auxiliar != None:
+				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
+				ultimoaidi = auxiliar.id
+				if auxiliar.derecha != None:
+					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.derecha.id) + ";"
+				if auxiliar.atras != None:
+					hayProfundidad = True
+				auxiliar = auxiliar.derecha
+			if hayProfundidad:
+				auxiliar = nodo
+				profundidad = auxiliar.atras
+				while auxiliar != None:
+					while profundidad != None:
+						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
+						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
+						ultimoaidi += 1996
+						profundidad = profundidad.atras
+					auxiliar = auxiliar.derecha
+					if auxiliar != None:
+						profundidad = auxiliar.atras
+			Grafo_dot += "\n}" 
+			Archivo = open('/home/moramaz/Escritorio/Inicial.dot', 'w') 
+			Archivo.write(Grafo_dot) 
+			Archivo.close() 
+			subprocess.call(['dot', '/home/moramaz/Escritorio/Inicial.dot', '-o', '/home/moramaz/Escritorio/inicial.png', '-Tpng', '-Gcharset=utf8']) 
+
+	def __ObtenerNodo(self, inicial, dominio, dato):
+		auxiliar1 = inicial.derecha
+		while auxiliar1 != None:
+			if auxiliar1.dominio == dominio.dato:
+				if auxiliar1.dato == dato:
+					return auxiliar1
+			auxiliar2 = auxiliar1.atras
+			while auxiliar2 != None:
+				if auxiliar2.dominio == dominio.dato:
+					if auxiliar2.dato == dato:
+						return auxiliar2
+				auxiliar2 = auxiliar2.atras
+			auxiliar1 = auxiliar1.derecha
+
 	def Insertar(self, inicial, dominio, dato):
 		NodoFila = NodoMatriz(inicial)
 		NodoColumna = NodoMatriz(dominio)
@@ -353,8 +426,59 @@ class Matriz:
 					auxiliar.izquierda = NodoDato
 					break
 
-	def Eliminar(self):
-		print "Ya wey! Perate wey!"
+	def Eliminar(self, inicial, dominio, dato):
+		if self.__InicialExiste(inicial) and self.__DominioExiste(dominio):
+			NodoDominio = self.__ObtenerDominio(dominio)
+			NodoInicial = self.__ObtenerInicial(inicial)
+			NodoDato = self.__ObtenerNodo(NodoInicial, NodoDominio, dato)
+			if NodoDato.atras != None:
+				if NodoDato.adelante != None:
+					NodoDato.adelante.atras = NodoDato.atras
+					NodoDato.atras.adelante = NodoDato.adelante
+				else:
+					NodoDato.atras.arriba = NodoDato.arriba
+					NodoDato.atras.abajo = NodoDato.abajo
+					NodoDato.atras.derecha = NodoDato.derecha
+					NodoDato.atras.izquierda = NodoDato.izquierda
+					NodoDato.arriba.abajo = NodoDato.atras
+					NodoDato.izquierda.derecha = NodoDato.atras
+					if NodoDato.abajo != None:
+						NodoDato.abajo.arriba = NodoDato.atras
+					if NodoDato.derecha != None:
+						NodoDato.derecha.izquierda = NodoDato.atras
+					NodoDato.atras.adelante = None
+			else:
+				if NodoDato.adelante != None:
+					NodoDato.adelante.atras = None
+				else:
+					NodoDato.izquierda.derecha = NodoDato.derecha
+					NodoDato.arriba.abajo = NodoDato.abajo
+					if NodoDato.derecha != None:
+						NodoDato.derecha.izquierda = NodoDato.izquierda
+					if NodoDato.abajo != None:
+						NodoDato.abajo.arriba = NodoDato.arriba
+			if NodoDominio.abajo == None:
+				if NodoDominio.izquierda != None:
+					NodoDominio.izquierda.derecha = NodoDominio.derecha
+				else:
+					self.inicio.derecha = NodoDominio.derecha
+				if NodoDominio.derecha != None:
+					if NodoDominio.izquierda != None:
+						NodoDominio.derecha.izquierda = NodoDominio.izquierda
+					else:
+						NodoDominio.derecha.izquierda = None
+			if NodoInicial.derecha == None:
+				if NodoInicial.arriba != None:
+					NodoInicial.arriba.abajo = NodoInicial.abajo
+				else:
+					self.inicio.abajo = NodoInicial.abajo
+				if NodoInicial.abajo != None:
+					if NodoInicial.arriba != None:
+						NodoInicial.abajo.arriba = NodoInicial.arriba
+					else:
+						NodoInicial.abajo.arriba = None
+		else:
+			print "Fijese que algo no se encontro joven :'v"
 
 	def BuscarDominio(self, dominio):
 		if self.__DominioExiste(dominio):
@@ -379,65 +503,6 @@ class Matriz:
 			return Cadena
 		else:
 			return "La inicial \"" + inicial + "\" no existe."
-
-	def __GraficarLista(self, nodo, esDominio):
-		auxiliar = nodo
-		hayProfundidad = False
-		ultimoaidi = 0
-		if esDominio:
-			Grafo_dot = "digraph Dominio{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Dominio '" + nodo.dato + "'\""
-			while auxiliar != None:
-				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
-				ultimoaidi = auxiliar.id
-				if auxiliar.abajo != None:
-					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.abajo.id) + ";"
-				if auxiliar.atras != None:
-					hayProfundidad = True
-				auxiliar = auxiliar.abajo
-			if hayProfundidad:
-				auxiliar = nodo
-				profundidad = auxiliar.atras
-				while auxiliar != None:
-					while profundidad != None:
-						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
-						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
-						ultimoaidi += 1996
-						profundidad = profundidad.atras
-					auxiliar = auxiliar.abajo
-					if auxiliar != None:
-						profundidad = auxiliar.atras
-			Grafo_dot += "\n}" 
-			Archivo = open('/home/moramaz/Escritorio/Dominio.dot', 'w') 
-			Archivo.write(Grafo_dot) 
-			Archivo.close() 
-			subprocess.call(['dot', '/home/moramaz/Escritorio/Dominio.dot', '-o', '/home/moramaz/Escritorio/Dominio.png', '-Tpng', '-Gcharset=utf8']) 
-		else:
-			Grafo_dot = "digraph Inicial{\n\trankdir=LR;\n\tnode [shape = box];\n\tlabel = \"Inicial '" + nodo.dato + "'\""
-			while auxiliar != None:
-				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
-				ultimoaidi = auxiliar.id
-				if auxiliar.derecha != None:
-					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.derecha.id) + ";"
-				if auxiliar.atras != None:
-					hayProfundidad = True
-				auxiliar = auxiliar.derecha
-			if hayProfundidad:
-				auxiliar = nodo
-				profundidad = auxiliar.atras
-				while auxiliar != None:
-					while profundidad != None:
-						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
-						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
-						ultimoaidi += 1996
-						profundidad = profundidad.atras
-					auxiliar = auxiliar.derecha
-					if auxiliar != None:
-						profundidad = auxiliar.atras
-			Grafo_dot += "\n}" 
-			Archivo = open('/home/moramaz/Escritorio/Inicial.dot', 'w') 
-			Archivo.write(Grafo_dot) 
-			Archivo.close() 
-			subprocess.call(['dot', '/home/moramaz/Escritorio/Inicial.dot', '-o', '/home/moramaz/Escritorio/inicial.png', '-Tpng', '-Gcharset=utf8']) 
 
 	def Graficar(self):
 		Grafo_dot = "digraph Matriz{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Matriz\"" 
@@ -581,7 +646,12 @@ def list_remove():
 
 @app.route('/matrix_remove', methods=['POST'])
 def matrix_remove():
-	return "alv :'v"
+	inicial = str(request.form['inicial'])
+	dominio = str(request.form['dominio'])
+	nombre = str(request.form['nombre'])
+	Matrix.Eliminar(str(inicial), str(dominio), str(nombre))
+	Matrix.Graficar()
+	return ""
 
 @app.route('/queue_remove', methods=['POST'])
 def queue_remove():
