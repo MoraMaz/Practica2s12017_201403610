@@ -72,10 +72,10 @@ public class VentanaCola extends javax.swing.JFrame {
     private void btnEnqueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnqueueActionPerformed
         if(txtEnqueue.getText().matches("\\d+")){
             conexion.queue_add(txtEnqueue.getText());
-            txtEnqueue.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
         }
+        txtEnqueue.setText("");
     }//GEN-LAST:event_btnEnqueueActionPerformed
 
     private void btnDequeueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDequeueActionPerformed

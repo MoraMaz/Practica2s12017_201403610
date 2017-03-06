@@ -38,22 +38,21 @@ public class PythonConexion {
         }
     }
     
-    public void matrix_add(String dato){
-        String[] separado = dato.split("@");
+    public void matrix_add(String direccion){
+        String[] separado = direccion.split("@");
         rb = new FormEncodingBuilder()
-                .add("inicial", dato.charAt(0) + "")
+                .add("inicial", direccion.charAt(0) + "")
                 .add("dominio", separado[1])
                 .add("nombre", separado[0])
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_add");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
-            System.out.println(response.body().string());
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
-            System.out.println(ex.toString());
+            ex.printStackTrace();
         }
     }
     
@@ -102,17 +101,17 @@ public class PythonConexion {
         }
     }
     
-    public void matrix_remove(String dato){
-        String[] separado = dato.split("@");
+    public void matrix_remove(String direccion){
+        String[] separado = direccion.split("@");
         rb = new FormEncodingBuilder()
-                .add("inicial", dato.charAt(0) + "")
+                .add("inicial", direccion.charAt(0) + "")
                 .add("dominio", separado[1])
                 .add("nombre", separado[0])
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_remove");
             Request request = new Request.Builder().url(url).post(rb).build();
-            Response response = webClient.newCall(request).execute();
+            webClient.newCall(request).execute();
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
         } catch (IOException ex) {
@@ -181,9 +180,9 @@ public class PythonConexion {
         }
     }
     
-    public String matrix_search_letter(String dato){
+    public String matrix_search_letter(String inicial){
         rb = new FormEncodingBuilder()
-                .add("inicial", dato)
+                .add("inicial", inicial)
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_search_letter");
@@ -198,9 +197,9 @@ public class PythonConexion {
         return null;
     }
     
-    public String matrix_search_domain(String dato){
+    public String matrix_search_domain(String dominio){
         rb = new FormEncodingBuilder()
-                .add("dominio", dato)
+                .add("dominio", dominio)
                 .build();
         try {
             URL url = new URL("http://0.0.0.0:5000/matrix_search_domain");

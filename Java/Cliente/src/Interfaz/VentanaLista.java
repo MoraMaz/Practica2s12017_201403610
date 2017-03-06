@@ -101,17 +101,17 @@ public class VentanaLista extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se puede insertar un valor nulo.");
         }else{
             conexion.list_add(txtAgregar.getText());
-            txtAgregar.setText("");
         }
+        txtAgregar.setText("");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         if(txtBorrar.getText().matches("\\d+")){
             conexion.list_remove(txtBorrar.getText());
-            txtBorrar.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Se necesita un índice numérico.");
         }
+        txtBorrar.setText("");
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -119,8 +119,8 @@ public class VentanaLista extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se puede buscar un valor nulo.");
         }else{
             conexion.list_search(txtBuscar.getText());
-            txtBuscar.setText("");
         }
+        txtBuscar.setText("");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -72,10 +72,10 @@ public class VentanaPila extends javax.swing.JFrame {
     private void btnPushActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPushActionPerformed
         if(txtPush.getText().matches("\\d+")){
             conexion.stak_add(txtPush.getText());
-            txtPush.setText("");
         }else{
             JOptionPane.showMessageDialog(this, "Sólo se pueden ingresar números.");
         }
+        txtPush.setText("");
     }//GEN-LAST:event_btnPushActionPerformed
 
     private void btnPopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopActionPerformed

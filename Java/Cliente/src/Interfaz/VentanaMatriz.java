@@ -1,6 +1,7 @@
 package Interfaz;
 
 import PythonConexion.PythonConexion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -113,22 +114,42 @@ public class VentanaMatriz extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if(txtAgregar.getText().matches(".+@.+")){
             conexion.matrix_add(txtAgregar.getText());
-            txtAgregar.setText("");
         }else{
-            System.out.println(":v");
+            JOptionPane.showMessageDialog(this, "Ingrese una dirección de correo electrónico.");
         }
+        txtAgregar.setText("");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        if(txtEliminar.getText().matches(".+@.+")){
+            conexion.matrix_remove(txtEliminar.getText());
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese una dirección de correo electrónico.");
+        }
+        txtEliminar.setText("");
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLetraActionPerformed
-        // TODO add your handling code here:
+        String Cadena = txtBuscarLetra.getText();
+        if(Cadena.length() == 1){
+            conexion.matrix_search_letter(Cadena);
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese una letra.");
+        }
+        txtBuscarLetra.setText("");
     }//GEN-LAST:event_btnBuscarLetraActionPerformed
 
     private void btnBuscarDominioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDominioActionPerformed
-        // TODO add your handling code here:
+        String Cadena = txtBuscarDominio.getText();
+        if(Cadena.length() > 0){
+            if(Cadena.contains("@")){
+                Cadena = Cadena.replace("@", "");
+            }
+            conexion.matrix_search_domain(Cadena);
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese un dominio.");
+        }
+        txtBuscarDominio.setText("");
     }//GEN-LAST:event_btnBuscarDominioActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -65,7 +65,6 @@ class ListaSimple:
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Lista_simple.dot', 'w')
 		Grafo_dot = "digraph ListaSimple{\n\tnode [shape = box];\n\trankdir=LR\n\tlabel=\"Lista Simple\"\n\n"
-		Grafo_dot = "digraph ListaSimple{\nlabel = \"Lista Simple\"\n\n"
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -111,7 +110,6 @@ class Cola:
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Cola.dot', 'w')
 		Grafo_dot = "digraph Cola{\n\tnode [shape = box];\n\tlabel=\"Cola\""
-		Grafo_dot = "digraph Cola{\n label = \"Cola\""
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -154,7 +152,6 @@ class Pila:
 	def Graficar(self):
 		Archivo = open('/home/moramaz/Escritorio/Pila.dot', 'w')
 		Grafo_dot = "digraph Pila{\n\tnode [shape = box];\n\tlabel=\"Pila\""
-		Grafo_dot = "digraph Pila{\n label = \"Pila\""
 		if self.Tamano != 0:
 			Auxiliar = self.Inicio
 			Indice = 0
@@ -212,6 +209,20 @@ class Matriz:
 				return True
 			auxiliar = auxiliar.abajo
 		return False
+
+	def __ObtenerDominio(self, dominio):
+		auxiliar = self.inicio.derecha
+		while auxiliar != None:
+			if auxiliar.dato == dominio:
+				return auxiliar
+			auxiliar = auxiliar.derecha
+
+	def __ObtenerInicial(self, inicial):
+		auxiliar = self.inicio.abajo
+		while auxiliar != None:
+			if auxiliar.dato == inicial:
+				return auxiliar
+			auxiliar = auxiliar.abajo
 
 	def Insertar(self, inicial, dominio, dato):
 		NodoFila = NodoMatriz(inicial)
@@ -342,6 +353,92 @@ class Matriz:
 					auxiliar.izquierda = NodoDato
 					break
 
+	def Eliminar(self):
+		print "Ya wey! Perate wey!"
+
+	def BuscarDominio(self, dominio):
+		if self.__DominioExiste(dominio):
+			Cadena = ""
+			auxiliar = self.__ObtenerDominio(dominio)
+			self.__GraficarLista(auxiliar, True)
+			while auxiliar != None:
+				Cadena += auxiliar.dato + "\n"
+				auxiliar = auxiliar.abajo
+			return Cadena
+		else:
+			return "El dominio \"" + dominio + "\" no existe."
+
+	def BuscarInicial(self, inicial):
+		if self.__InicialExiste(inicial):
+			Cadena = ""
+			auxiliar = self.__ObtenerInicial(inicial)
+			self.__GraficarLista(auxiliar, False)
+			while auxiliar != None:
+				Cadena += auxiliar.dato + "\n"
+				auxiliar = auxiliar.derecha
+			return Cadena
+		else:
+			return "La inicial \"" + inicial + "\" no existe."
+
+	def __GraficarLista(self, nodo, esDominio):
+		auxiliar = nodo
+		hayProfundidad = False
+		ultimoaidi = 0
+		if esDominio:
+			Grafo_dot = "digraph Dominio{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Dominio '" + nodo.dato + "'\""
+			while auxiliar != None:
+				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
+				ultimoaidi = auxiliar.id
+				if auxiliar.abajo != None:
+					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.abajo.id) + ";"
+				if auxiliar.atras != None:
+					hayProfundidad = True
+				auxiliar = auxiliar.abajo
+			if hayProfundidad:
+				auxiliar = nodo
+				profundidad = auxiliar.atras
+				while auxiliar != None:
+					while profundidad != None:
+						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
+						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
+						ultimoaidi += 1996
+						profundidad = profundidad.atras
+					auxiliar = auxiliar.abajo
+					if auxiliar != None:
+						profundidad = auxiliar.atras
+			Grafo_dot += "\n}" 
+			Archivo = open('/home/moramaz/Escritorio/Dominio.dot', 'w') 
+			Archivo.write(Grafo_dot) 
+			Archivo.close() 
+			subprocess.call(['dot', '/home/moramaz/Escritorio/Dominio.dot', '-o', '/home/moramaz/Escritorio/Dominio.png', '-Tpng', '-Gcharset=utf8']) 
+		else:
+			Grafo_dot = "digraph Inicial{\n\trankdir=LR;\n\tnode [shape = box];\n\tlabel = \"Inicial '" + nodo.dato + "'\""
+			while auxiliar != None:
+				Grafo_dot += "\n\tNode" + str(auxiliar.id) + "[label = \"" + str(auxiliar.dato) + "\"];"
+				ultimoaidi = auxiliar.id
+				if auxiliar.derecha != None:
+					Grafo_dot += "\n\tNode" + str(auxiliar.id) + " -> Node" + str(auxiliar.derecha.id) + ";"
+				if auxiliar.atras != None:
+					hayProfundidad = True
+				auxiliar = auxiliar.derecha
+			if hayProfundidad:
+				auxiliar = nodo
+				profundidad = auxiliar.atras
+				while auxiliar != None:
+					while profundidad != None:
+						Grafo_dot += "\n\tNode" + str(ultimoaidi + 1996) + "[label = \"" + str(profundidad.dato) + "\"];"
+						Grafo_dot += "\n\tNode" + str(ultimoaidi) + " -> Node" + str(ultimoaidi + 1996) + ";"
+						ultimoaidi += 1996
+						profundidad = profundidad.atras
+					auxiliar = auxiliar.derecha
+					if auxiliar != None:
+						profundidad = auxiliar.atras
+			Grafo_dot += "\n}" 
+			Archivo = open('/home/moramaz/Escritorio/Inicial.dot', 'w') 
+			Archivo.write(Grafo_dot) 
+			Archivo.close() 
+			subprocess.call(['dot', '/home/moramaz/Escritorio/Inicial.dot', '-o', '/home/moramaz/Escritorio/inicial.png', '-Tpng', '-Gcharset=utf8']) 
+
 	def Graficar(self):
 		Grafo_dot = "digraph Matriz{\n\trankdir=UD;\n\tnode [shape = box];\n\tlabel = \"Matriz\"" 
 		paraAbajo = self.inicio
@@ -443,10 +540,6 @@ Matrix = Matriz()
 def init():
 	return ""
 
-@app.route('/')
-def init():
-	return "esto es una prueba :v"
-
 #INSERTAR
 @app.route('/list_add', methods=['POST'])
 def list_add():
@@ -463,14 +556,6 @@ def matrix_add():
 	Matrix.Insertar(str(inicial), str(dominio), str(nombre))
 	Matrix.Graficar()
 	return ""
-
-@app.route('/matrix_add', methods=['POST'])
-def matrix_add():
-	inicial = str(request.form['inicial'])
-	dominio = str(request.form['dominio'])
-	nombre = str(request.form['nombre'])
-	Matrix.Agregar(str(inicial), str(dominio), str(nombre))
-	print "se agrego " + str(nombre) + "@" + str(dominio) + " a la matriz."
 
 @app.route('/queue_add', methods=['POST'])
 def queue_add():
@@ -496,7 +581,7 @@ def list_remove():
 
 @app.route('/matrix_remove', methods=['POST'])
 def matrix_remove():
-	print ":3"
+	return "alv :'v"
 
 @app.route('/queue_remove', methods=['POST'])
 def queue_remove():
@@ -518,11 +603,13 @@ def list_search():
 
 @app.route('/matrix_search_letter', methods=['POST'])
 def matrix_search_letter():
-	return ":3"
+	inicial = str(request.form['inicial'])
+	return Matrix.BuscarInicial(inicial)
 
 @app.route('/matrix_search_domain', methods=['POST'])
 def matrix_search_domain():
-	return ":3"
+	dominio = str(request.form['dominio'])
+	return Matrix.BuscarDominio(dominio)
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0')
